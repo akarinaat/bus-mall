@@ -2,8 +2,7 @@
 //Need counter que me ayudará con el 25 veces.
 var counter = 0;
 console.log(counter);
-//Here I'm accesing to th elements in HTML
-//Elements from the DOM at the top.
+
 var buttonNumber1 = document.getElementById('button-1');
 var buttonNumber2 = document.getElementById('button-2');
 var buttonNumber3 = document.getElementById('button-3');
@@ -12,14 +11,13 @@ var product1Image = document.getElementById('img1');
 var product2Image = document.getElementById('img2');
 var product3Image = document.getElementById('img3');
 
-//I'm going to create a constructor function to change the images WHEN ONE of th ebuttons is clicked.
-//What do I want to change? The source.
+Product.lastImgage = [];
 
 function Product(src, name) {
   this.src = src;
   this.name = name;
+  this.thimesDisplayed = 0;
   this.votes = 0;
-
 
 }
 
@@ -47,22 +45,77 @@ var allProducts = [
 
 ];
 
+Product.uniqueDouble = function () {
+  var uniqueOptions = [];
+  //math.random to generate random number
+  //Account fot the array lenght (allProducts)
+  while(uniqueOptions.length < 3){
+    var ranNum = Math.floor(Math.random() * allProducts.length);
+    //compare 2 previous with the new one
+    //Includes gives me a boolean
+    //!Whatever this evaluates, change it
+    //compare the 2 numbers to each other
+    //&& bot of those to be true
+    if(!Product.lastImgage.includes(ranNum) && !uniqueOptions.includes(ranNum)) {
+      uniqueOptions.push(ranNum);
+    } else {
+      console.log('Duplicate!');
+    }
+  }
+  Product.lastImgage = uniqueOptions;
+  return uniqueOptions;
+};
+
+Product.randomProduct = function () {
+
+  var uniqueImages = Product.uniqueDouble();
+
+  //Increment the number of times displayed
+  Product.allProducts[uniqueImages[0]].timesDisplayed++;
+  Product.allProducts[uniqueImages[1]].timesDisplayed++;
+  Product.allProducts[uniqueImages[2]].timesDisplayed++;
+
+  //So now that they are unique numbers, display 2 unique images
+
+  Product.img1.src = Product.allProducts[uniqueImages[0]].src;
+  Product.img1.alt = Product.allProducts[uniqueImages[0]].name;
+
+  Product.img2.src = Product.allProducts[uniqueImages[0]].src;
+  Product.img2.alt = Product.allProducts[uniqueImages[0]].name;
+
+  Product.img3.src = Product.allProducts[uniqueImages[0]].src;
+  Product.img3.alt = Product.allProducts[uniqueImages[0]].name;
+
+  Product.img1.src = Product.allProducts[uniqueImages[1]].src;
+  Product.img1.alt = Product.allProducts[uniqueImages[1]].name;
+
+  Product.img2.src = Product.allProducts[uniqueImages[1]].src;
+  Product.img2.alt = Product.allProducts[uniqueImages[1]].name;
+
+  Product.img3.src = Product.allProducts[uniqueImages[1]].src;
+  Product.img3.alt = Product.allProducts[uniqueImages[1]].name;
+
+  Product.img1.src = Product.allProducts[uniqueImages[2]].src;
+  Product.img1.alt = Product.allProducts[uniqueImages[2]].name;
+
+  Product.img2.src = Product.allProducts[uniqueImages[2]].src;
+  Product.img2.alt = Product.allProducts[uniqueImages[2]].name;
+
+  Product.img3.src = Product.allProducts[uniqueImages[2]].src;
+  Product.img3.alt = Product.allProducts[uniqueImages[2]].name;
+
+};
+
+
+
+
+
 //percentage
 
 //Here I'm saying that these variables are these pictures.
 var product1 = allProducts[0];
 var product2 = allProducts[1];
 var product3 = allProducts[2];
-
-//I want to know how many votes does each button get WHEN CLICKED!!!
-//I want a function that tracks that.
-//Where am i listening: I'm listening at buttonNumber1
-
-//I WANT THIS FUNCTION TO INCREMENT THE VOTE COUNT of this button
-
-//When I'm console.loging I need to write product1/2/ 3Votesto see the conuter.
-
-
 
 var ulElement = document.getElementById('counter-list');
 
