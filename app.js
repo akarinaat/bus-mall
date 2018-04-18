@@ -1,5 +1,7 @@
 'use strict';
-
+//Need counter que me ayudará con el 25 veces.
+var counter = 0;
+console.log(counter);
 //Here I'm accesing to th elements in HTML
 //Elements from the DOM at the top.
 var buttonNumber1 = document.getElementById('button-1');
@@ -13,36 +15,40 @@ var product3Image = document.getElementById('img3');
 //I'm going to create a constructor function to change the images WHEN ONE of th ebuttons is clicked.
 //What do I want to change? The source.
 
-function Product(src, id) {
+function Product(src, name) {
   this.src = src;
-  this.id = id;
+  this.name = name;
   this.votes = 0;
+
 
 }
 
 var allProducts = [
-  new Product('img/bag.jpg'),
-  new Product('img/banana.jpg'),
-  new Product('img/bathroom.jpg'),
-  new Product('img/boots.jpg'),
-  new Product('img/breakfast.jpg'),
-  new Product('img/bubblegum.jpg'),
-  new Product('img/chair.jpg'),
-  new Product('img/cthulhu.jpg'),
-  new Product('img/dog-duck.jpg'),
-  new Product('img/dragon.jpg'),
-  new Product('img/pen.jpg'),
-  new Product('img/pet-sweep.jpg'),
-  new Product('img/scissors.jpg'),
-  new Product('img/shark.jpg'),
-  new Product('img/sweep.png'),
-  new Product('img/tauntaun.jpg'),
-  new Product('img/unicorn.jpg'),
-  new Product('img/usb.gif'),
-  new Product('img/water-can.jpg'),
-  new Product('img/wine-glass.jpg')
+  new Product('img/bag.jpg','R2D2 Bag'),
+  new Product('img/banana.jpg','Banana slicer'),
+  new Product('img/bathroom.jpg','Bathroom iPad'),
+  new Product('img/boots.jpg', 'Rain boots'),
+  new Product('img/breakfast.jpg', 'Breakfast machine'),
+  new Product('img/bubblegum.jpg', 'Bubble Gum balls'),
+  new Product('img/chair.jpg', 'Red chair'),
+  new Product('img/cthulhu.jpg', 'Green Monster'),
+  new Product('img/dog-duck.jpg', 'Dog-Duck'),
+  new Product('img/dragon.jpg', 'Dragon meat'),
+  new Product('img/pen.jpg', 'Pen lid'),
+  new Product('img/pet-sweep.jpg', 'Pet Sweep'),
+  new Product('img/scissors.jpg', 'Pizza scissors'),
+  new Product('img/shark.jpg', 'Shark sleeping bag'),
+  new Product('img/sweep.png', 'Baby sweep'),
+  new Product('img/tauntaun.jpg', 'Tauntaun'),
+  new Product('img/unicorn.jpg','Unicorn meat'),
+  new Product('img/usb.gif', 'Octo USB'),
+  new Product('img/water-can.jpg','Water can'),
+  new Product('img/wine-glass.jpg','Wine Glass')
 
 ];
+
+//percentage
+
 //Here I'm saying that these variables are these pictures.
 var product1 = allProducts[0];
 var product2 = allProducts[1];
@@ -52,31 +58,58 @@ var product3 = allProducts[2];
 //I want a function that tracks that.
 //Where am i listening: I'm listening at buttonNumber1
 
-buttonNumber1.addEventListener('click', function (e){
-  //I WANT THIS FUNCTION TO INCREMENT THE VOTE COUNT of this button
+//I WANT THIS FUNCTION TO INCREMENT THE VOTE COUNT of this button
+
+//When I'm console.loging I need to write product1/2/ 3Votesto see the conuter.
+
+
+
+var ulElement = document.getElementById('counter-list');
+
+function renderList(){
+  for(var i = 0; i < allProducts.length; i++){
+    var listElement = document.createElement('li');
+    listElement.textContent = allProducts[i].name + ' ' + allProducts[i].votes;
+    ulElement.appendChild(listElement);
+  }
+}
+
+function handleClickImg1() {
+  counter++;
   product1.votes++;
+  stopImages();
   changeImage();
+}
 
-});
-
-buttonNumber2.addEventListener('click', function(e){
-  //When I'm console.loging I need to write product1/2/ 3Votesto see the conuter.
+function handleClickImg2() {
+  counter++;
   product2.votes++;
+  stopImages();
   changeImage();
-});
+}
 
-buttonNumber3.addEventListener('click', function(e){
+function handleClickImg3() {
+  counter++;
   product3.votes++;
+  stopImages();
   changeImage();
-});
 
-//Now I want to change the images with every click.
-//Here are all my instances. All my products.
+}
 
+buttonNumber1.addEventListener('click', handleClickImg1);
+buttonNumber2.addEventListener('click', handleClickImg2);
+buttonNumber3.addEventListener('click', handleClickImg3);
 
-//Quiero que cambie la imagen randomly, so that's why I'm multiplyin por un numero randon del 1 al 25, que el el length de mi array de imagenes. And I use Math.floor because I rounded it down, from 0 to 25.
+function stopImages() {
+  if(counter === 25) {
+    console.log('counter is 5');
+    buttonNumber1.removeEventListener('click', handleClickImg1);
+    buttonNumber2.removeEventListener('click', handleClickImg2);
+    buttonNumber3.removeEventListener('click', handleClickImg3);
+    renderList();
+  }
+}
 
-//I have to find the element I want to change, and that I do with the html if from the image.
 function changeImage() {
   product1 = allProducts[Math.floor(Math.random() * allProducts.length)];
   product1Image.src = product1.src;
@@ -89,31 +122,4 @@ function changeImage() {
 
 changeImage();
 
-// var buttonNumber1 = allProducts[0];
-// var buttonNumber2 = allProducts[1];
-// var buttonNumber3 = allProducts[2];
 
-// buttonNumber1.addEventListener('click', function (e)
-
-// {
-//   buttonNumber1.votes++;
-//   buttonNumber1 = allProducts[Math.floor(Math.random() * allProducts.lenghth)];
-//   product1Image.src = buttonNumber1.url;
-//   buttonNumber2.votes++;
-//   buttonNumber2 = allProducts[Math.floor(Math.random() * allProducts.lenghth)];
-//   product2Image.src = buttonNumber2.url;
-
-
-// });
-
-// buttonNumber2.addEventListener('click', function (e) {
-
-
-// });
-
-// buttonNumber3.addEventListener('click', function (e) {
-//   buttonNumber3.votes++;
-//   buttonNumber3 = allProducts[Math.floor(Math.random() * allProducts.lenghth)];
-//   product3Image.src = buttonNumber3.url;
-
-// });
