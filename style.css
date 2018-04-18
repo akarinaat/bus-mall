@@ -27,8 +27,12 @@ img {
 #buttons{
   margin-left: 27%;
   margin-top: 20%;
+  padding-top: 20px;
 }
 
 button{
   margin-right: 150px;
+  background-color: #444;
+  color: white;
+  
 }

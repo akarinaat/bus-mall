@@ -13,8 +13,9 @@ var product3Image = document.getElementById('img3');
 //I'm going to create a constructor function to change the images WHEN ONE of th ebuttons is clicked.
 //What do I want to change? The source.
 
-function Product(src) {
+function Product(src, id) {
   this.src = src;
+  this.id = id;
   this.votes = 0;
 
 }
@@ -39,7 +40,7 @@ var allProducts = [
   new Product('img/unicorn.jpg'),
   new Product('img/usb.gif'),
   new Product('img/water-can.jpg'),
-  new Product('img/water-glass.jpg')
+  new Product('img/wine-glass.jpg')
 
 ];
 //Here I'm saying that these variables are these pictures.
@@ -54,19 +55,19 @@ var product3 = allProducts[2];
 buttonNumber1.addEventListener('click', function (e){
   //I WANT THIS FUNCTION TO INCREMENT THE VOTE COUNT of this button
   product1.votes++;
-  changeImage()
+  changeImage();
 
 });
 
 buttonNumber2.addEventListener('click', function(e){
   //When I'm console.loging I need to write product1/2/ 3Votesto see the conuter.
   product2.votes++;
-  changeImage()
+  changeImage();
 });
 
 buttonNumber3.addEventListener('click', function(e){
   product3.votes++;
-  changeImage()
+  changeImage();
 });
 
 //Now I want to change the images with every click.
@@ -74,8 +75,8 @@ buttonNumber3.addEventListener('click', function(e){
 
 
 //Quiero que cambie la imagen randomly, so that's why I'm multiplyin por un numero randon del 1 al 25, que el el length de mi array de imagenes. And I use Math.floor because I rounded it down, from 0 to 25.
-  
-  //I have to find the element I want to change, and that I do with the html if from the image.
+
+//I have to find the element I want to change, and that I do with the html if from the image.
 function changeImage() {
   product1 = allProducts[Math.floor(Math.random() * allProducts.length)];
   product1Image.src = product1.src;
@@ -86,32 +87,7 @@ function changeImage() {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+changeImage();
 
 // var buttonNumber1 = allProducts[0];
 // var buttonNumber2 = allProducts[1];
