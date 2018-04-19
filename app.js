@@ -3,6 +3,10 @@
 var counter = 0;
 console.log(counter);
 
+Product.productNames = [];
+Product.productVotes = [];
+Product.arrayOfColors = [];
+
 var buttonNumber1 = document.getElementById('button-1');
 var buttonNumber2 = document.getElementById('button-2');
 var buttonNumber3 = document.getElementById('button-3');
@@ -16,7 +20,7 @@ Product.lastImgage = [];
 function Product(src, name) {
   this.src = src;
   this.name = name;
-  this.thimesDisplayed = 0;
+  this.timesDisplayed = 0;
   this.votes = 0;
 
 }
@@ -45,6 +49,10 @@ var allProducts = [
 
 ];
 
+var product1 = allProducts[0];
+var product2 = allProducts[1];
+var product3 = allProducts[2];
+
 Product.uniqueDouble = function () {
   var uniqueOptions = [];
   //math.random to generate random number
@@ -58,64 +66,77 @@ Product.uniqueDouble = function () {
     //&& bot of those to be true
     if(!Product.lastImgage.includes(ranNum) && !uniqueOptions.includes(ranNum)) {
       uniqueOptions.push(ranNum);
+      console.log(uniqueOptions);
     } else {
       console.log('Duplicate!');
+      console.log(uniqueOptions);
     }
   }
   Product.lastImgage = uniqueOptions;
+  console.log(uniqueOptions);
   return uniqueOptions;
 };
 
-Product.randomProduct = function () {
 
-  var uniqueImages = Product.uniqueDouble();
 
-  //Increment the number of times displayed
-  Product.allProducts[uniqueImages[0]].timesDisplayed++;
-  Product.allProducts[uniqueImages[1]].timesDisplayed++;
-  Product.allProducts[uniqueImages[2]].timesDisplayed++;
+Product.handleClick = function(e) {
 
-  //So now that they are unique numbers, display 2 unique images
+  Product.totalClicks++;
 
-  Product.img1.src = Product.allProducts[uniqueImages[0]].src;
-  Product.img1.alt = Product.allProducts[uniqueImages[0]].name;
+  console.log(event.target.alt);
 
-  Product.img2.src = Product.allProducts[uniqueImages[0]].src;
-  Product.img2.alt = Product.allProducts[uniqueImages[0]].name;
+  for(var i in Product.allProducts) {
+    if(e.target.alt === Product.allProducts[i].name) {
+      Product.allProducts[i].votes++;
+      break;
+    }
+  }
+};
+Product.updateVotes = function() {
+  for(var i in Product.allProducts){
+    Product.productNames[i] = Product.allProducts[i].name;
+    Product.productVotes[i] = Product.allProducts[i].votes;
 
-  Product.img3.src = Product.allProducts[uniqueImages[0]].src;
-  Product.img3.alt = Product.allProducts[uniqueImages[0]].name;
+    Product.arrayOfColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 
-  Product.img1.src = Product.allProducts[uniqueImages[1]].src;
-  Product.img1.alt = Product.allProducts[uniqueImages[1]].name;
-
-  Product.img2.src = Product.allProducts[uniqueImages[1]].src;
-  Product.img2.alt = Product.allProducts[uniqueImages[1]].name;
-
-  Product.img3.src = Product.allProducts[uniqueImages[1]].src;
-  Product.img3.alt = Product.allProducts[uniqueImages[1]].name;
-
-  Product.img1.src = Product.allProducts[uniqueImages[2]].src;
-  Product.img1.alt = Product.allProducts[uniqueImages[2]].name;
-
-  Product.img2.src = Product.allProducts[uniqueImages[2]].src;
-  Product.img2.alt = Product.allProducts[uniqueImages[2]].name;
-
-  Product.img3.src = Product.allProducts[uniqueImages[2]].src;
-  Product.img3.alt = Product.allProducts[uniqueImages[2]].name;
-
+  }
 };
 
+Product.renderChart = function () {
+  var ctx = document.getElementById('myChart');
 
-
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Product.productNames,
+      datasets: [{
+        label:'Votes per product',
+        data: Product.productVotes,
+        backgroundColor: Product.arrayOfColors,
+        hoverBackgroundColor: 'yellow'
+      }]
+    },
+    options: {
+      scales:{
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      title: {
+        display: true,
+        text:'Results'
+      }
+    }
+  });
+};
 
 
 //percentage
 
 //Here I'm saying that these variables are these pictures.
-var product1 = allProducts[0];
-var product2 = allProducts[1];
-var product3 = allProducts[2];
+
 
 var ulElement = document.getElementById('counter-list');
 
@@ -160,19 +181,76 @@ function stopImages() {
     buttonNumber2.removeEventListener('click', handleClickImg2);
     buttonNumber3.removeEventListener('click', handleClickImg3);
     renderList();
+    Product.renderChart();
   }
+
 }
 
+
 function changeImage() {
-  product1 = allProducts[Math.floor(Math.random() * allProducts.length)];
+
+  var uniqueImages = Product.uniqueDouble();
+
+  // product1 = uniqueImages [0];
+  // product2 = uniqueImages [1];
+  // product3 = uniqueImages [2];
+
+
+
+  // product1 = allProducts[Math.floor(Math.random() * allProducts.length)];
+  product1 = allProducts[uniqueImages[0]];
   product1Image.src = product1.src;
-  product2 = allProducts[Math.floor(Math.random() * allProducts.length)];
+  // product2 = allProducts[Math.floor(Math.random() * allProducts.length)];
+  product2 = allProducts[uniqueImages[1]];
   product2Image.src = product2.src;
-  product3 = allProducts[Math.floor(Math.random() * allProducts.length)];
+  // product3 = allProducts[Math.floor(Math.random() * allProducts.length)];
+  product3 = allProducts[uniqueImages[2]];
   product3Image.src = product3.src;
+
+
+
+  allProducts[uniqueImages[0]].timesDisplayed++;
+  allProducts[uniqueImages[1]].timesDisplayed++;
+  allProducts[uniqueImages[2]].timesDisplayed++;
+
+
+
+  Product.src = allProducts[uniqueImages[0]].src;
+  Product.img1.alt = allProducts[uniqueImages[0]].name;
+
+  Product.src = allProducts[uniqueImages[0]].src;
+  Product.img2.alt = allProducts[uniqueImages[0]].name;
+
+  Product.src = allProducts[uniqueImages[0]].src;
+  Product.img3.alt = allProducts[uniqueImages[0]].name;
+
+  Product.src = allProducts[uniqueImages[1]].src;
+  Product.img1.alt = allProducts[uniqueImages[1]].name;
+
+  Product.src = allProducts[uniqueImages[1]].src;
+  Product.img2.alt = allProducts[uniqueImages[1]].name;
+
+  Product.src = allProducts[uniqueImages[1]].src;
+  Product.img3.alt = allProducts[uniqueImages[1]].name;
+
+  Product.src = allProducts[uniqueImages[2]].src;
+  Product.img1.alt = allProducts[uniqueImages[2]].name;
+
+  Product.src = allProducts[uniqueImages[2]].src;
+  Product.img2.alt = allProducts[uniqueImages[2]].name;
+
+  Product.src = allProducts[uniqueImages[2]].src;
+  Product.img3.alt = allProducts[uniqueImages[2]].name;
+
 
 }
 
 changeImage();
+
+
+
+
+
+
 
 
