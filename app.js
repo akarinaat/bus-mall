@@ -6,6 +6,8 @@ console.log(counter);
 Product.productNames = [];
 Product.productVotes = [];
 Product.arrayOfColors = [];
+Product.lastImgage = [];
+
 
 var buttonNumber1 = document.getElementById('button-1');
 var buttonNumber2 = document.getElementById('button-2');
@@ -15,7 +17,6 @@ var product1Image = document.getElementById('img1');
 var product2Image = document.getElementById('img2');
 var product3Image = document.getElementById('img3');
 
-Product.lastImgage = [];
 
 function Product(src, name) {
   this.src = src;
@@ -131,7 +132,7 @@ Product.renderChart = function () {
     }
   });
 };
-
+console.log('chart');
 
 //percentage
 
