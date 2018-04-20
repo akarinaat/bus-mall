@@ -28,30 +28,36 @@ function Product(src, name) {
   Product.productVotes.push(this.votes);
 
 }
+var allProducts = [];
 
-var allProducts = [
-  new Product('img/bag.jpg','R2D2 Bag'),
-  new Product('img/banana.jpg','Banana slicer'),
-  new Product('img/bathroom.jpg','Bathroom iPad'),
-  new Product('img/boots.jpg', 'Rain boots'),
-  new Product('img/breakfast.jpg', 'Breakfast machine'),
-  new Product('img/bubblegum.jpg', 'Bubble Gum balls'),
-  new Product('img/chair.jpg', 'Red chair'),
-  new Product('img/cthulhu.jpg', 'Green Monster'),
-  new Product('img/dog-duck.jpg', 'Dog-Duck'),
-  new Product('img/dragon.jpg', 'Dragon meat'),
-  new Product('img/pen.jpg', 'Pen lid'),
-  new Product('img/pet-sweep.jpg', 'Pet Sweep'),
-  new Product('img/scissors.jpg', 'Pizza scissors'),
-  new Product('img/shark.jpg', 'Shark sleeping bag'),
-  new Product('img/sweep.png', 'Baby sweep'),
-  new Product('img/tauntaun.jpg', 'Tauntaun'),
-  new Product('img/unicorn.jpg','Unicorn meat'),
-  new Product('img/usb.gif', 'Octo USB'),
-  new Product('img/water-can.jpg','Water can'),
-  new Product('img/wine-glass.jpg','Wine Glass')
+if (Product.parsedProducts === null){
+  allProducts = [
+    new Product('img/bag.jpg','R2D2 Bag'),
+    new Product('img/banana.jpg','Banana slicer'),
+    new Product('img/bathroom.jpg','Bathroom iPad'),
+    new Product('img/boots.jpg', 'Rain boots'),
+    new Product('img/breakfast.jpg', 'Breakfast machine'),
+    new Product('img/bubblegum.jpg', 'Bubble Gum balls'),
+    new Product('img/chair.jpg', 'Red chair'),
+    new Product('img/cthulhu.jpg', 'Green Monster'),
+    new Product('img/dog-duck.jpg', 'Dog-Duck'),
+    new Product('img/dragon.jpg', 'Dragon meat'),
+    new Product('img/pen.jpg', 'Pen lid'),
+    new Product('img/pet-sweep.jpg', 'Pet Sweep'),
+    new Product('img/scissors.jpg', 'Pizza scissors'),
+    new Product('img/shark.jpg', 'Shark sleeping bag'),
+    new Product('img/sweep.png', 'Baby sweep'),
+    new Product('img/tauntaun.jpg', 'Tauntaun'),
+    new Product('img/unicorn.jpg','Unicorn meat'),
+    new Product('img/usb.gif', 'Octo USB'),
+    new Product('img/water-can.jpg','Water can'),
+    new Product('img/wine-glass.jpg','Wine Glass')
+  ];
+} else {
+  allProducts = Product.parsedProducts;
+}
 
-];
+
 
 var product1 = allProducts[0];
 var product2 = allProducts[1];
