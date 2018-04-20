@@ -1,5 +1,5 @@
 'use strict';
-//Need counter que me ayudará con el 25 veces.
+
 var counter = 0;
 console.log(counter);
 
@@ -7,7 +7,7 @@ Product.productNames = [];
 Product.productVotes = [];
 Product.arrayOfColors = [];
 Product.lastImgage = [];
-
+Product.allProducts = [];
 
 var buttonNumber1 = document.getElementById('button-1');
 var buttonNumber2 = document.getElementById('button-2');
@@ -17,12 +17,15 @@ var product1Image = document.getElementById('img1');
 var product2Image = document.getElementById('img2');
 var product3Image = document.getElementById('img3');
 
+Product.parsedProducts = JSON.parse(localStorage.getItem('results'));
 
 function Product(src, name) {
   this.src = src;
   this.name = name;
   this.timesDisplayed = 0;
   this.votes = 0;
+  Product.allProducts.push(this);
+  Product.productVotes.push(this.votes);
 
 }
 
@@ -56,15 +59,8 @@ var product3 = allProducts[2];
 
 Product.uniqueDouble = function () {
   var uniqueOptions = [];
-  //math.random to generate random number
-  //Account fot the array lenght (allProducts)
   while(uniqueOptions.length < 3){
     var ranNum = Math.floor(Math.random() * allProducts.length);
-    //compare 2 previous with the new one
-    //Includes gives me a boolean
-    //!Whatever this evaluates, change it
-    //compare the 2 numbers to each other
-    //&& bot of those to be true
     if(!Product.lastImgage.includes(ranNum) && !uniqueOptions.includes(ranNum)) {
       uniqueOptions.push(ranNum);
       console.log(uniqueOptions);
@@ -78,26 +74,12 @@ Product.uniqueDouble = function () {
   return uniqueOptions;
 };
 
-
-
-Product.handleClick = function(e) {
-
-  Product.totalClicks++;
-
-  console.log(event.target.alt);
-
-  for(var i in Product.allProducts) {
-    if(e.target.alt === Product.allProducts[i].name) {
-      Product.allProducts[i].votes++;
-      break;
-    }
-  }
-};
 Product.updateVotes = function() {
+  console.log(Product.allProducts);
   for(var i in Product.allProducts){
     Product.productNames[i] = Product.allProducts[i].name;
+    Product.productNames.push(Product.productNames[i]);
     Product.productVotes[i] = Product.allProducts[i].votes;
-
     Product.arrayOfColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 
   }
@@ -135,10 +117,6 @@ Product.renderChart = function () {
 console.log('chart');
 
 //percentage
-
-//Here I'm saying that these variables are these pictures.
-
-
 var ulElement = document.getElementById('counter-list');
 
 function renderList(){
@@ -181,68 +159,40 @@ function stopImages() {
     buttonNumber1.removeEventListener('click', handleClickImg1);
     buttonNumber2.removeEventListener('click', handleClickImg2);
     buttonNumber3.removeEventListener('click', handleClickImg3);
+    var stringifiedProduct = JSON.stringify(allProducts);
+    localStorage.setItem('results',stringifiedProduct);
     renderList();
+    Product.updateVotes();
+    console.log(Product.productVotes);
     Product.renderChart();
   }
 
 }
 
-
 function changeImage() {
 
   var uniqueImages = Product.uniqueDouble();
 
-  // product1 = uniqueImages [0];
-  // product2 = uniqueImages [1];
-  // product3 = uniqueImages [2];
-
-
-
-  // product1 = allProducts[Math.floor(Math.random() * allProducts.length)];
   product1 = allProducts[uniqueImages[0]];
   product1Image.src = product1.src;
-  // product2 = allProducts[Math.floor(Math.random() * allProducts.length)];
   product2 = allProducts[uniqueImages[1]];
   product2Image.src = product2.src;
-  // product3 = allProducts[Math.floor(Math.random() * allProducts.length)];
   product3 = allProducts[uniqueImages[2]];
   product3Image.src = product3.src;
-
-
 
   allProducts[uniqueImages[0]].timesDisplayed++;
   allProducts[uniqueImages[1]].timesDisplayed++;
   allProducts[uniqueImages[2]].timesDisplayed++;
 
-
-
   Product.src = allProducts[uniqueImages[0]].src;
-  Product.img1.alt = allProducts[uniqueImages[0]].name;
-
   Product.src = allProducts[uniqueImages[0]].src;
-  Product.img2.alt = allProducts[uniqueImages[0]].name;
-
   Product.src = allProducts[uniqueImages[0]].src;
-  Product.img3.alt = allProducts[uniqueImages[0]].name;
-
   Product.src = allProducts[uniqueImages[1]].src;
-  Product.img1.alt = allProducts[uniqueImages[1]].name;
-
   Product.src = allProducts[uniqueImages[1]].src;
-  Product.img2.alt = allProducts[uniqueImages[1]].name;
-
   Product.src = allProducts[uniqueImages[1]].src;
-  Product.img3.alt = allProducts[uniqueImages[1]].name;
-
   Product.src = allProducts[uniqueImages[2]].src;
-  Product.img1.alt = allProducts[uniqueImages[2]].name;
-
   Product.src = allProducts[uniqueImages[2]].src;
-  Product.img2.alt = allProducts[uniqueImages[2]].name;
-
   Product.src = allProducts[uniqueImages[2]].src;
-  Product.img3.alt = allProducts[uniqueImages[2]].name;
-
 
 }
 
