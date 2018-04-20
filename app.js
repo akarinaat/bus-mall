@@ -24,6 +24,8 @@ function Product(src, name) {
   this.name = name;
   this.timesDisplayed = 0;
   this.votes = 0;
+  Product.allProducts.push(this);
+  Product.productVotes.push(this.votes);
 
 }
 
@@ -72,27 +74,16 @@ Product.uniqueDouble = function () {
   return uniqueOptions;
 };
 
-Product.handleClick = function(e) {
-  Product.totalClicks++;
-  console.log(event.target.alt);
-  for(var i in Product.allProducts) {
-    if(e.target.alt === Product.allProducts[i].name) {
-      Product.allProducts[i].votes++;
-      break;
-    }
-  }
-};
 Product.updateVotes = function() {
+  console.log(Product.allProducts);
   for(var i in Product.allProducts){
     Product.productNames[i] = Product.allProducts[i].name;
     Product.productNames.push(Product.productNames[i]);
     Product.productVotes[i] = Product.allProducts[i].votes;
-    Product.productVotes.push(Product.productVotes[i]);
     Product.arrayOfColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 
   }
 };
-Product.updateVotes();
 
 Product.renderChart = function () {
   var ctx = document.getElementById('myChart');
@@ -171,6 +162,8 @@ function stopImages() {
     var stringifiedProduct = JSON.stringify(allProducts);
     localStorage.setItem('results',stringifiedProduct);
     renderList();
+    Product.updateVotes();
+    console.log(Product.productVotes);
     Product.renderChart();
   }
 
