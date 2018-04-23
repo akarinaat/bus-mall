@@ -4,6 +4,7 @@ var counter = 0;
 console.log(counter);
 
 Product.productNames = [];
+console.log(Product.productNames);
 Product.productVotes = [];
 Product.arrayOfColors = [];
 Product.lastImgage = [];
@@ -25,7 +26,7 @@ function Product(src, name) {
   this.timesDisplayed = 0;
   this.votes = 0;
   Product.allProducts.push(this);
-  Product.productVotes.push(this.votes);
+  // Product.productVotes.push(this.votes);
 
 }
 var allProducts = [];
@@ -57,8 +58,6 @@ if (Product.parsedProducts === null){
   allProducts = Product.parsedProducts;
 }
 
-
-
 var product1 = allProducts[0];
 var product2 = allProducts[1];
 var product3 = allProducts[2];
@@ -82,18 +81,17 @@ Product.uniqueDouble = function () {
 
 Product.updateVotes = function() {
   console.log(Product.allProducts);
-  for(var i in Product.allProducts){
-    Product.productNames[i] = Product.allProducts[i].name;
-    Product.productNames.push(Product.productNames[i]);
-    Product.productVotes[i] = Product.allProducts[i].votes;
+  for(var i in allProducts){
+    Product.productNames[i] = allProducts[i].name;
+    Product.productVotes[i] = allProducts[i].votes;
     Product.arrayOfColors.push('#' + Math.floor(Math.random() * 16777215).toString(16));
 
   }
 };
+Product.updateVotes();
 
 Product.renderChart = function () {
   var ctx = document.getElementById('myChart');
-
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -122,7 +120,6 @@ Product.renderChart = function () {
 };
 console.log('chart');
 
-//percentage
 var ulElement = document.getElementById('counter-list');
 
 function renderList(){
@@ -136,21 +133,20 @@ function renderList(){
 function handleClickImg1() {
   counter++;
   product1.votes++;
-  stopImages();
   changeImage();
+
 }
 
 function handleClickImg2() {
   counter++;
   product2.votes++;
-  stopImages();
   changeImage();
+
 }
 
 function handleClickImg3() {
   counter++;
   product3.votes++;
-  stopImages();
   changeImage();
 
 }
@@ -160,8 +156,7 @@ buttonNumber2.addEventListener('click', handleClickImg2);
 buttonNumber3.addEventListener('click', handleClickImg3);
 
 function stopImages() {
-  if(counter === 25) {
-    console.log('counter is 5');
+  if(counter === 3) {
     buttonNumber1.removeEventListener('click', handleClickImg1);
     buttonNumber2.removeEventListener('click', handleClickImg2);
     buttonNumber3.removeEventListener('click', handleClickImg3);
@@ -169,7 +164,6 @@ function stopImages() {
     localStorage.setItem('results',stringifiedProduct);
     renderList();
     Product.updateVotes();
-    console.log(Product.productVotes);
     Product.renderChart();
   }
 
@@ -199,6 +193,7 @@ function changeImage() {
   Product.src = allProducts[uniqueImages[2]].src;
   Product.src = allProducts[uniqueImages[2]].src;
   Product.src = allProducts[uniqueImages[2]].src;
+  stopImages();
 
 }
 
