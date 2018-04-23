@@ -1,4 +1,5 @@
 'use strict';
+alert('Please click on the image of the product you would prefer to purchase.');
 
 var counter = 0;
 console.log(counter);
@@ -10,9 +11,9 @@ Product.arrayOfColors = [];
 Product.lastImgage = [];
 Product.allProducts = [];
 
-var buttonNumber1 = document.getElementById('button-1');
-var buttonNumber2 = document.getElementById('button-2');
-var buttonNumber3 = document.getElementById('button-3');
+// var buttonNumber1 = document.getElementById('button-1');
+// var buttonNumber2 = document.getElementById('button-2');
+// var buttonNumber3 = document.getElementById('button-3');
 
 var product1Image = document.getElementById('img1');
 var product2Image = document.getElementById('img2');
@@ -151,20 +152,29 @@ function handleClickImg3() {
 
 }
 
-buttonNumber1.addEventListener('click', handleClickImg1);
-buttonNumber2.addEventListener('click', handleClickImg2);
-buttonNumber3.addEventListener('click', handleClickImg3);
+// buttonNumber1.addEventListener('click', handleClickImg1);
+// buttonNumber2.addEventListener('click', handleClickImg2);
+// buttonNumber3.addEventListener('click', handleClickImg3);
+product1Image.addEventListener('click', handleClickImg1);
+product2Image.addEventListener('click', handleClickImg2);
+product3Image.addEventListener('click', handleClickImg3);
 
 function stopImages() {
-  if(counter === 3) {
-    buttonNumber1.removeEventListener('click', handleClickImg1);
-    buttonNumber2.removeEventListener('click', handleClickImg2);
-    buttonNumber3.removeEventListener('click', handleClickImg3);
+  if(counter === 25) {
+    // buttonNumber1.removeEventListener('click', handleClickImg1);
+    // buttonNumber2.removeEventListener('click', handleClickImg2);
+    // buttonNumber3.removeEventListener('click', handleClickImg3);
+    product1Image.removeEventListener('click', handleClickImg1);
+    product2Image.removeEventListener('click', handleClickImg2);
+    product3Image.removeEventListener('click', handleClickImg3);
     var stringifiedProduct = JSON.stringify(allProducts);
     localStorage.setItem('results',stringifiedProduct);
+    alert('Thank you! We appreciate your cooperaton. These are your results!');
     renderList();
     Product.updateVotes();
     Product.renderChart();
+
+
   }
 
 }
